@@ -6,5 +6,9 @@
   },
   "engines": {
     "node": "v23.2.0"
-  }
+  },
+  "scripts": {
+  "start": "node server.js",
+  "heroku-postbuild": "cd client && npm install && npm run build"
+}
 }

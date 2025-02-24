@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 import stockRoutes from "./backend/routes/stocks.js";
 import portfolioRoutes from "./backend/routes/portfolio.js";
+const path = require("path");
 
 // Load environment variables
 dotenv.config();
@@ -39,6 +40,15 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+// Serve React frontend in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+  });
+}
 
 // Sample route for testing
 app.get("/", (req, res) => {
